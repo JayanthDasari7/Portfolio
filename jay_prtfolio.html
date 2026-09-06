@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dasari Jayanth — Cloud DevOps Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12161C;
+    --panel: #181E27;
+    --panel-2: #1D242F;
+    --line: #2B3542;
+    --line-soft: #232B36;
+    --text: #E9ECF1;
+    --muted: #8D98A6;
+    --accent: #E8632C;
+    --accent-dim: #9C4A26;
+    --ok: #4FBF7A;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection{ background: var(--accent); color: #12161C; }
+
+  a{ color: inherit; }
+
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+
+  h1, h2, h3{
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  .wrap{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(18,22,28,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav-inner{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-mark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .nav-mark .dot{
+    width: 9px; height:9px;
+    border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 0 3px rgba(79,191,122,0.15);
+    flex-shrink:0;
+  }
+  nav.links{
+    display:flex;
+    gap: 26px;
+    font-size: 14px;
+  }
+  nav.links a{
+    text-decoration:none;
+    color: var(--muted);
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  nav.links a:hover{ color: var(--text); border-color: var(--accent); }
+
+  @media (max-width: 620px){
+    nav.links{ gap: 14px; font-size: 12.5px; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 78px 0 64px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .terminal{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px 20px;
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .terminal-bar{
+    display:flex; gap:6px; margin-bottom: 14px;
+  }
+  .terminal-bar span{
+    width:9px; height:9px; border-radius:50%;
+    background: var(--line);
+    display:inline-block;
+  }
+  #termLines{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: #B7C0CC;
+    min-height: 108px;
+    white-space: pre-wrap;
+  }
+  #termLines .prompt{ color: var(--ok); }
+  #termLines .caret{
+    display:inline-block;
+    width: 7px; height: 14px;
+    background: var(--accent);
+    vertical-align: -2px;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  .hero h1{
+    font-size: clamp(42px, 7vw, 64px);
+    line-height: 0.98;
+    color: var(--text);
+  }
+  .hero .role{
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent);
+    font-size: 15px;
+    margin-top: 14px;
+    display:block;
+  }
+  .hero p.lede{
+    max-width: 540px;
+    color: var(--muted);
+    margin-top: 18px;
+    font-size: 16px;
+  }
+  .hero .cta-row{
+    display:flex;
+    gap: 14px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    padding: 11px 18px;
+    border-radius: 4px;
+    text-decoration:none;
+    display:inline-block;
+    border: 1px solid var(--line);
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .btn.primary{
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #171004;
+    font-weight: 500;
+  }
+  .btn.primary:hover{ background: #F17643; border-color:#F17643; }
+  .btn.ghost{ color: var(--text); }
+  .btn.ghost:hover{ border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- Section shell ---------- */
+  section{
+    padding: 62px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  section:last-of-type{ border-bottom: none; }
+
+  .section-head{
+    display:flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+  .section-head .tag-num{
+    font-family:'IBM Plex Mono', monospace;
+    color: var(--accent-dim);
+    font-size: 13px;
+  }
+  .section-head h2{
+    font-size: 30px;
+    color: var(--text);
+  }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 700px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-grid p{ color: var(--muted); margin: 0 0 14px; font-size: 15.5px; }
+
+  .crate{
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px 20px;
+    background: var(--panel);
+    position: relative;
+  }
+  .crate + .crate{ margin-top: 14px; }
+  .crate .corner{
+    position:absolute; top:8px; right:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--line);
+    letter-spacing: 0.06em;
+  }
+  .crate h3{
+    font-size: 19px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .crate .meta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .crate .gpa{
+    display:inline-block;
+    margin-top: 8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ok);
+    border: 1px solid rgba(79,191,122,0.35);
+    background: rgba(79,191,122,0.08);
+    padding: 3px 9px;
+    border-radius: 3px;
+  }
+
+  /* ---------- Skills manifest ---------- */
+  .manifest{
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .manifest-row{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .manifest-row:last-child{ border-bottom: none; }
+  .manifest-row .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+    padding: 15px 18px;
+    border-right: 1px solid var(--line-soft);
+    background: var(--panel-2);
+  }
+  .manifest-row .items{
+    padding: 13px 18px;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-content:center;
+  }
+  .chip{
+    font-size: 13.5px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 5px 11px;
+    border-radius: 3px;
+  }
+  @media (max-width: 620px){
+    .manifest-row{ grid-template-columns: 1fr; }
+    .manifest-row .label{ border-right:none; border-bottom:1px solid var(--line-soft); }
+  }
+
+  /* ---------- Projects ---------- */
+  .proj-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 700px){ .proj-grid{ grid-template-columns: 1fr; } }
+
+  .proj-card{
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--panel);
+    padding: 20px 22px;
+    transition: border-color .15s ease;
+  }
+  .proj-card:hover{ border-color: var(--accent-dim); }
+  .proj-card .idx{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-dim);
+    margin-bottom: 8px;
+    display:block;
+  }
+  .proj-card h3{
+    font-size: 21px;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .proj-card ul{
+    margin: 0 0 14px;
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .proj-card li{ margin-bottom: 6px; }
+  .proj-card li b{ color: var(--text); font-weight: 600; }
+  .tools-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 6px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line);
+  }
+  .tools-row span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--panel-2);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .proj-card.full{ grid-column: 1 / -1; }
+
+  /* ---------- Certifications ---------- */
+  .cert-ticket{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 20px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    background: var(--panel);
+    padding: 20px 24px;
+    flex-wrap: wrap;
+  }
+  .cert-ticket h3{ font-size: 20px; margin-bottom: 4px; color: var(--text); }
+  .cert-ticket .issuer{ color: var(--muted); font-size: 14px; }
+  .cert-ticket .note{
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 280px;
+  }
+  .cert-badge{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ok);
+    border: 1px solid rgba(79,191,122,0.35);
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Contact / Footer ---------- */
+  footer{
+    padding: 60px 0 50px;
+  }
+  footer h2{
+    font-size: 34px;
+    margin-bottom: 14px;
+  }
+  footer p{
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 26px;
+  }
+  .contact-list{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 14.5px;
+    margin-bottom: 30px;
+  }
+  .contact-list > div{ display:flex; align-items:baseline; }
+  .contact-list a{ text-decoration:none; color: var(--text); }
+  .contact-list a:hover{ color: var(--accent); }
+  .contact-list .k{ color: var(--muted); display:inline-block; width: 70px; flex-shrink:0; }
+  .badges-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 30px; }
+  .badges-row a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration:none;
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .badges-row a:hover{ color: var(--accent); border-color: var(--accent); }
+  .foot-line{
+    border-top: 1px solid var(--line-soft);
+    padding-top: 20px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #5C6672;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    #termLines .caret{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-mark"><span class="dot"></span>Dasari Jayanth</div>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#certs">Certs</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-bottom:none;">
+    <div class="terminal">
+      <div class="terminal-bar"><span></span><span></span><span></span></div>
+      <div id="termLines"></div>
+    </div>
+
+    <h1>Dasari<br>Jayanth</h1>
+    <span class="role">Cloud DevOps Engineer — Fresher</span>
+    <p class="lede">I provision infrastructure, containerize applications, and wire up CI/CD pipelines — currently sharpening those skills in the 5th semester of my 3rd year at Loyola Academy.</p>
+    <div class="cta-row">
+      <a href="#projects" class="btn primary">View projects</a>
+      <a href="#contact" class="btn ghost">Get in touch</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-head"><span class="tag-num">01</span><h2>About</h2></div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a Cloud Computing student with hands-on practice across Docker, Kubernetes, Jenkins, GitHub Actions, and the core AWS stack. Most of what I know, I've built by standing up small pipelines and infrastructure projects end to end — not just reading about them.</p>
+        <p>I'm in my 3rd year, 5th semester, actively learning and looking to bring adaptability, curiosity, and a fresh perspective to a DevOps or cloud infrastructure team.</p>
+      </div>
+      <div>
+        <div class="crate">
+          <span class="corner">EDU/01</span>
+          <h3>Loyola Academy</h3>
+          <div class="meta">BSc Computer Science &amp; Cloud Computing · 2024–2027</div>
+          <div class="meta">3rd year, 5th semester</div>
+          <span class="gpa">GPA 9.3</span>
+        </div>
+        <div class="crate">
+          <span class="corner">EDU/02</span>
+          <h3>Narayana Junior College</h3>
+          <div class="meta">MPC — Maths, Physics, Chemistry</div>
+          <span class="gpa">85%</span>
+        </div>
+        <div class="crate">
+          <span class="corner">EDU/03</span>
+          <h3>SSC — State Board</h3>
+          <div class="meta">10th Standard</div>
+          <span class="gpa">GPA 9.5</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head"><span class="tag-num">02</span><h2>Skills manifest</h2></div>
+    <div class="manifest">
+      <div class="manifest-row">
+        <div class="label">operating systems</div>
+        <div class="items"><span class="chip">Linux (Ubuntu)</span><span class="chip">Amazon Linux</span><span class="chip">Windows</span></div>
+      </div>
+      <div class="manifest-row">
+        <div class="label">version control</div>
+        <div class="items"><span class="chip">Git</span><span class="chip">GitHub</span></div>
+      </div>
+      <div class="manifest-row">
+        <div class="label">ci/cd</div>
+        <div class="items"><span class="chip">Jenkins</span><span class="chip">GitHub Actions</span></div>
+      </div>
+      <div class="manifest-row">
+        <div class="label">cloud — aws</div>
+        <div class="items"><span class="chip">VPC</span><span class="chip">IAM</span><span class="chip">S3</span><span class="chip">RDS</span><span class="chip">CloudWatch</span></div>
+      </div>
+      <div class="manifest-row">
+        <div class="label">containers</div>
+        <div class="items"><span class="chip">Docker</span><span class="chip">Multi-stage builds</span><span class="chip">Kubernetes</span></div>
+      </div>
+      <div class="manifest-row">
+        <div class="label">infra as code</div>
+        <div class="items"><span class="chip">Terraform</span><span class="chip">Ansible</span></div>
+      </div>
+      <div class="manifest-row">
+        <div class="label">web servers</div>
+        <div class="items"><span class="chip">Nginx</span><span class="chip">Apache</span></div>
+      </div>
+      <div class="manifest-row">
+        <div class="label">scripting</div>
+        <div class="items"><span class="chip">Shell</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-head"><span class="tag-num">03</span><h2>Projects</h2></div>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <span class="idx">CRATE-01</span>
+        <h3>Docker &amp; Containerization</h3>
+        <ul>
+          <li>Built multi-stage Dockerfiles, cutting final image size by <b>40–60%</b></li>
+          <li>Hardened images with slim base images and non-root users</li>
+          <li>Containerized web apps for consistent cross-environment deploys</li>
+        </ul>
+        <div class="tools-row"><span>Docker</span><span>Linux</span></div>
+      </div>
+
+      <div class="proj-card">
+        <span class="idx">CRATE-02</span>
+        <h3>Infrastructure Provisioning with Terraform</h3>
+        <ul>
+          <li>Provisioned AWS VPC, EC2, IAM, S3 &amp; Security Groups</li>
+          <li>Built reusable modules, cutting setup time by <b>50%</b></li>
+          <li>Followed IaC principles for repeatable, versioned infra</li>
+        </ul>
+        <div class="tools-row"><span>Terraform</span><span>AWS</span></div>
+      </div>
+
+      <div class="proj-card">
+        <span class="idx">CRATE-03</span>
+        <h3>Configuration Management with Ansible</h3>
+        <ul>
+          <li>Automated server config &amp; app setup via playbooks</li>
+          <li>Cut configuration errors by <b>60%</b> vs. manual setup</li>
+          <li>Managed packages, services &amp; web server deployments</li>
+        </ul>
+        <div class="tools-row"><span>Ansible</span><span>Linux</span></div>
+      </div>
+
+      <div class="proj-card">
+        <span class="idx">CRATE-04</span>
+        <h3>Monitoring &amp; Server Management</h3>
+        <ul>
+          <li>Monitored EC2 instances &amp; system metrics with CloudWatch</li>
+          <li>Assisted with log analysis and health checks</li>
+          <li>Handled routine Linux admin — users, permissions, services</li>
+        </ul>
+        <div class="tools-row"><span>AWS CloudWatch</span><span>Linux</span></div>
+      </div>
+
+      <div class="proj-card full">
+        <span class="idx">CRATE-05</span>
+        <h3>AWS-Based CI/CD Deployment Pipeline</h3>
+        <ul>
+          <li>Built a full CI/CD pipeline with <b>Jenkins + Docker + EC2</b></li>
+          <li>Automated build and deployment of a containerized web app</li>
+          <li>Provisioned infra with Terraform, configured servers with Ansible</li>
+        </ul>
+        <div class="tools-row"><span>Jenkins</span><span>Docker</span><span>AWS EC2</span><span>Terraform</span><span>Ansible</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certs">
+    <div class="section-head"><span class="tag-num">04</span><h2>Certifications</h2></div>
+    <div class="cert-ticket">
+      <div>
+        <h3>AWS Certified Cloud Practitioner</h3>
+        <div class="issuer">Ram Info World</div>
+      </div>
+      <div class="note">Foundational cloud concepts, AWS services, security, pricing &amp; support.</div>
+      <span class="cert-badge">VERIFIED</span>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:16px;"><span class="tag-num">05</span><h2>Let's talk infrastructure</h2></div>
+    <p>Open to internships and entry-level Cloud / DevOps roles. Reach out — I reply fast.</p>
+    <div class="contact-list">
+      <div><span class="k">email</span><a href="mailto:djpvt007@gmail.com">djpvt007@gmail.com</a></div>
+      <div><span class="k">phone</span><a href="tel:+916304018330">+91 63040 18330</a></div>
+      <div><span class="k">location</span><span>Hyderabad, Telangana</span></div>
+    </div>
+    <div class="badges-row">
+      <a href="https://www.linkedin.com/in/dasari-jayanth-b32ab9367/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/JayanthDasari7" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="foot-line">status: open-to-work · last deployed 2026</div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var el = document.getElementById('termLines');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var lines = [
+      {p:'$ ', t:'whoami', c:false},
+      {p:'', t:'dasari_jayanth', c:false},
+      {p:'$ ', t:'infra plan --status', c:false},
+      {p:'', t:'provisioning vpc, ec2, iam ......... done', c:false},
+      {p:'', t:'building docker image .............. done', c:false},
+      {p:'', t:'running ansible playbooks .......... done', c:false},
+      {p:'$ ', t:'echo $ROLE', c:false},
+      {p:'', t:'Cloud DevOps Engineer (Fresher)', c:true}
+    ];
+
+    function render(finalOnly){
+      el.innerHTML = '';
+      lines.forEach(function(l){
+        var div = document.createElement('div');
+        if(l.p){
+          var pr = document.createElement('span');
+          pr.className = 'prompt';
+          pr.textContent = l.p;
+          div.appendChild(pr);
+        }
+        var span = document.createElement('span');
+        span.style.color = l.c ? '#4FBF7A' : '';
+        span.textContent = l.t;
+        div.appendChild(span);
+        el.appendChild(div);
+      });
+      var caret = document.createElement('span');
+      caret.className = 'caret';
+      el.appendChild(caret);
+    }
+
+    if(reduceMotion){
+      render();
+      return;
+    }
+
+    var i = 0;
+    function next(){
+      if(i >= lines.length){ return; }
+      var l = lines[i];
+      var div = document.createElement('div');
+      var pr = null;
+      if(l.p){
+        pr = document.createElement('span');
+        pr.className = 'prompt';
+        pr.textContent = l.p;
+        div.appendChild(pr);
+      }
+      var span = document.createElement('span');
+      span.style.color = l.c ? '#4FBF7A' : '';
+      div.appendChild(span);
+      el.appendChild(div);
+
+      var chars = l.t.split('');
+      var j = 0;
+      var speed = 18;
+      (function type(){
+        if(j < chars.length){
+          span.textContent += chars[j];
+          j++;
+          setTimeout(type, speed);
+        } else {
+          i++;
+          setTimeout(next, 220);
+        }
+      })();
+    }
+    next();
+  })();
+</script>
+
+</body>
+</html>
